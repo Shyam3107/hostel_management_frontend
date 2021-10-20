@@ -59,7 +59,7 @@ export default function Header() {
           id="navbarSupportedContent"
         >
           <ul className={"navbar-nav ml-auto " + styles.ul}>
-            <Link to="/">
+            <Link to="/profile">
               <li className="nav-items active">PROFILE</li>
             </Link>
             <Link to="/attendance">

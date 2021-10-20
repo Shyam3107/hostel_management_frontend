@@ -1,4 +1,7 @@
-export const backendURL = "htttp://localhost:5000";
+import toastMessage from "../components/CustomComponents/ToastMessage/toastMessage";
+import { error, warn } from "../utils/constants";
+
+export const backendURL = "http://localhost:5000";
 
 const modules = {
   attendance: "/attendance",
@@ -17,4 +20,10 @@ export const API = {
   // LEAVE
   ADD_LEAVE: `${modules.leave}/addLeave`,
   EDIT_LEAVE: `${modules.leave}/editLeave`,
+};
+
+export const handleError = (dispatch = () => {}, action = {}, err) => {
+  dispatch(action);
+  if (!navigator.onLine) return toastMessage("You Are Offline", warn);
+  return toastMessage(err, error);
 };

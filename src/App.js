@@ -1,14 +1,22 @@
+import { Suspense, lazy } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import Route from "./components/Routes/Route";
+import { createBrowserHistory } from "history";
 import axios from "axios";
+import { connect } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { backendURL } from "./APIs/APIs";
+import BackDropLoader from "./components/CustomComponents/BackDropLoader/BackDropLoader";
+
+const Header = lazy(() => import("./components/Header/Header"));
+const Footer = lazy(() => import("./components/Footer/Footer"));
+const Route = lazy(() => import("./components/Routes/Route"));
 
 axios.interceptors.request.use(
   (config) => {
-    // const token = store.getState().session.token;
-    // config.headers.Authorization =  `Bearer ${token}`;
+    const token = JSON.parse(localStorage.getItem("token"));
+    if (token) config.headers.Authorization = `Bearer ${token}`;
     config.url = backendURL + config.url;
     return config;
   },
@@ -18,16 +26,28 @@ axios.interceptors.request.use(
   }
 );
 
-function App() {
+function App(props) {
+  const hist = createBrowserHistory();
+  const loggedIn = props.user.loggedIn;
+  
   return (
     <div className="App">
-      <Router>
-        <Header />
-        <Route />
-      </Router>
-      <Footer />
+      <Suspense fallback={<BackDropLoader />}>
+        <Router history={hist}>
+          {loggedIn && <Header />}
+          <Route />
+          <ToastContainer />
+          {loggedIn && <Footer />}
+        </Router>
+      </Suspense>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(App);
