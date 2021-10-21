@@ -2,8 +2,8 @@ import * as actionTypes from "./actionTypes";
 
 const initialState = {
   loading: false,
-  //token: JSON.parse(sessionStorage.getItem("token")),
-  //user: JSON.parse(sessionStorage.getItem("user")),
+  token: sessionStorage.getItem("token"),
+  user: JSON.parse(sessionStorage.getItem("user")),
   loggedIn: Boolean(sessionStorage.getItem("token")),
   error: null,
 };

@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   attendance: null,
   error: null,
+  addLoading: false,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -14,6 +15,12 @@ export default function reducer(state = initialState, action = {}) {
       return { ...initialState, attendance: action.payload };
     case actionTypes.GET_ATTENDANCE_FAILURE:
       return { ...initialState, error: action.payload };
+    case actionTypes.ADD_ATTENDANCE_PENDING:
+      return { ...state, addLoading: true };
+    case actionTypes.ADD_ATTENDANCE_SUCCESS:
+      return { ...state, addLoading: false };
+    case actionTypes.ADD_ATTENDANCE_FAILURE:
+      return { ...state, addLoading: false };
     default:
       return state;
   }

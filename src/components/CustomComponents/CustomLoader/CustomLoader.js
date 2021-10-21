@@ -20,6 +20,7 @@ export default function Loader({ skeleton }) {
       alignContent="center"
       alignItems="center"
       margin="20px auto"
+      paddingBottom="30px"
     >
       <CircularProgress color="primary" />
     </Box>

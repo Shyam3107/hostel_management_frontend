@@ -8,3 +8,12 @@ export const ROUTES = {
   PROFILE: "/profile",
   LOGOUT: "/logout",
 };
+
+export const formatDate = (date) => {
+  try {
+    date = new Date(date).toLocaleString();
+    return date;
+  } catch (error) {
+    return "InValid Date";
+  }
+};

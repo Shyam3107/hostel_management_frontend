@@ -15,8 +15,11 @@ const Route = lazy(() => import("./components/Routes/Route"));
 
 axios.interceptors.request.use(
   (config) => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    if (token) config.headers.Authorization = `Bearer ${token}`;
+    if (sessionStorage.getItem("token")) {
+      config.headers.Authorization = `Bearer ${sessionStorage.getItem(
+        "token"
+      )}`;
+    }
     config.url = backendURL + config.url;
     return config;
   },
@@ -29,15 +32,17 @@ axios.interceptors.request.use(
 function App(props) {
   const hist = createBrowserHistory();
   const loggedIn = props.user.loggedIn;
-  
+
   return (
-    <div className="App">
+    <div className="App" style={{ position: "relative", minHeight: "100vh" }}>
       <Suspense fallback={<BackDropLoader />}>
         <Router history={hist}>
-          {loggedIn && <Header />}
-          <Route />
-          <ToastContainer />
-          {loggedIn && <Footer />}
+          
+            {loggedIn && <Header />}
+            <Route />
+            <ToastContainer />
+            {loggedIn && <Footer />}
+          
         </Router>
       </Suspense>
     </div>

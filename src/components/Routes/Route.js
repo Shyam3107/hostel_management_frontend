@@ -15,28 +15,30 @@ const Routes = (props) => {
     );
   };
   return (
-    <Switch>
-      <Route exact path="/">
-        {loggedIn ? (
-          <Redirect to={ROUTES.PROFILE} />
-        ) : (
-          <Redirect to={ROUTES.LOGIN} />
-        )}
-      </Route>
-      <Route exact path={ROUTES.LOGIN}>
-        {loggedIn ? <Redirect to={ROUTES.PROFILE} /> : <Login />}
-      </Route>
+    <div style={{ paddingBottom: "50px" }}>
+      <Switch>
+        <Route exact path="/">
+          {loggedIn ? (
+            <Redirect to={ROUTES.PROFILE} />
+          ) : (
+            <Redirect to={ROUTES.LOGIN} />
+          )}
+        </Route>
+        <Route exact path={ROUTES.LOGIN}>
+          {loggedIn ? <Redirect to={ROUTES.PROFILE} /> : <Login />}
+        </Route>
 
-      <PrivateRoute exact path={ROUTES.PROFILE}>
-        <Profile />
-      </PrivateRoute>
-      <PrivateRoute exact path={ROUTES.ATTENDANCE}>
-        <Attendance />
-      </PrivateRoute>
-      <PrivateRoute exact path={ROUTES.LOGOUT}>
-        <Logout />
-      </PrivateRoute>
-    </Switch>
+        <PrivateRoute exact path={ROUTES.PROFILE}>
+          <Profile />
+        </PrivateRoute>
+        <PrivateRoute exact path={ROUTES.ATTENDANCE}>
+          <Attendance />
+        </PrivateRoute>
+        <PrivateRoute exact path={ROUTES.LOGOUT}>
+          <Logout />
+        </PrivateRoute>
+      </Switch>
+    </div>
   );
 };
 

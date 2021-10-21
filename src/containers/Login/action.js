@@ -27,14 +27,13 @@ export const userLogin = (data, cb) => (dispatch) => {
       return;
     })
     .catch((err) => {
-      console.log("err ", err.response);
       return handleError(
         dispatch,
         {
           type: actionTypes.LOGIN_FAILURE,
           err: err,
         },
-        err.response ? err.response.data.error : "Some Error Occured"
+        err
       );
     });
 };

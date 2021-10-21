@@ -23,7 +23,9 @@ export const API = {
 };
 
 export const handleError = (dispatch = () => {}, action = {}, err) => {
+  console.log("err ", err);
+  let errMssg = err.response ? err.response.data.error : "Some Error Occured";
   dispatch(action);
   if (!navigator.onLine) return toastMessage("You Are Offline", warn);
-  return toastMessage(err, error);
+  return toastMessage(errMssg, error);
 };
