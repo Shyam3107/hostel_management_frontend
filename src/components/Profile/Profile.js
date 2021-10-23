@@ -11,7 +11,7 @@ const Profile = (props) => {
     },
     {
       label: "Roll No",
-      value: user.rollNO,
+      value: user.rollNo,
     },
     {
       label: "Phone No.",
