@@ -13,14 +13,17 @@ import CustomTable, {
 import { formatDate } from "../../utils/constants";
 
 const Attendance = (props) => {
-  useEffect(() => {
-    props.getAttendance();
-  }, []);
+  let { getAttendance } = props;
+  let { userType } = props.user.user;
 
-  let { loading, attendance, error, addLoading } = props.attendance;
+  useEffect(() => {
+    getAttendance();
+  }, [getAttendance]);
+
+  let { loading, attendance, addLoading } = props.attendance;
 
   const handleFileSubmit = (file) => {
-    props.addAttendance(uploadFileForm(file), props.getAttendance);
+    props.addAttendance(uploadFileForm(file), getAttendance);
   };
 
   let header = ["Roll No", "Name", "Time"];
@@ -39,7 +42,7 @@ const Attendance = (props) => {
       {addLoading && <BackDropLoader />}
       <div style={{ margin: "20px" }}>
         <CustomTable
-          onFileUpload={handleFileSubmit}
+          onFileUpload={userType !== "STUDENT" && handleFileSubmit}
           rows={attendance}
           headCells={header}
           heading="Attendance"
@@ -53,6 +56,7 @@ const Attendance = (props) => {
 const mapStateToProps = (state) => {
   return {
     attendance: state.attendance,
+    user: state.user,
   };
 };
 

@@ -7,6 +7,7 @@ const modules = {
   attendance: "/attendance",
   login: "/login",
   leave: "/leave",
+  student: "/student",
 };
 
 export const API = {
@@ -18,8 +19,13 @@ export const API = {
   ADD_ATTENDANCE: `${modules.attendance}/addAttendance`,
 
   // LEAVE
+  GET_LEAVE: `${modules.leave}/getLeave`,
   ADD_LEAVE: `${modules.leave}/addLeave`,
   EDIT_LEAVE: `${modules.leave}/editLeave`,
+
+  //STUDENTS
+  ADD_STUDENTS: `${modules.student}/addStudents`,
+  GET_STUDENTS: `${modules.student}/getStudents`,
 };
 
 export const handleError = (dispatch = () => {}, action = {}, err) => {

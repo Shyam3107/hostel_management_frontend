@@ -1,12 +1,17 @@
 import { useState } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { ROUTES } from "../../utils/constants";
 import styles from "./Header.module.css";
 
-export default function Header() {
-  var [isClosed, setIsClosed] = useState(false);
-  var toggleChange = function () {
+const Header = (props) => {
+  let [isClosed, setIsClosed] = useState(false);
+  let toggleChange = function () {
     setIsClosed(!isClosed);
   };
+
+  const { userType } = props.user.user ? props.user.user : {};
+
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-light bg-dark">
@@ -59,13 +64,23 @@ export default function Header() {
           id="navbarSupportedContent"
         >
           <ul className={"navbar-nav ml-auto " + styles.ul}>
-            <Link to="/profile">
-              <li className="nav-items active">PROFILE</li>
-            </Link>
-            <Link to="/attendance">
+            {userType === "STUDENT" && (
+              <Link to={ROUTES.PROFILE}>
+                <li className="nav-items active">PROFILE</li>
+              </Link>
+            )}
+            {userType !== "STUDENT" && (
+              <Link to={ROUTES.STUDENTS}>
+                <li className="nav-items">STUDENTS</li>
+              </Link>
+            )}
+            <Link to={ROUTES.ATTENDANCE}>
               <li className="nav-items">ATTENDANCE</li>
             </Link>
-            <Link to="/logout">
+            <Link to={ROUTES.LEAVE}>
+              <li className="nav-items">LEAVE</li>
+            </Link>
+            <Link to={ROUTES.LOGOUT}>
               <li className="nav-items">LOGOUT</li>
             </Link>
           </ul>
@@ -73,4 +88,12 @@ export default function Header() {
       </nav>
     </header>
   );
-}
+};
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Header);
